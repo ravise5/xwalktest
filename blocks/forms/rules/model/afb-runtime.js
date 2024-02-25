@@ -18,7 +18,7 @@
 * the terms of the Adobe license agreement accompanying it.
 *************************************************************************/
 
-import { propertyChange, ExecuteRule, Initialize, RemoveItem, FormLoad, FieldChanged, ValidationComplete, Change, Format, Valid, Invalid, SubmitSuccess, CustomEvent, SubmitFailure, Submit, RemoveInstance, AddInstance, Reset, AddItem, Click } from './afb-events.js';
+import { propertyChange, ExecuteRule, Initialize, RemoveItem, FormLoad, FieldChanged, ValidationComplete, Change, Valid, Invalid, SubmitSuccess, CustomEvent, SubmitFailure, Submit, RemoveInstance, AddInstance, Reset, AddItem, Click } from './afb-events.js';
 import Formula from '../formula/index.js';
 import { format, parseDefaultDate, datetimeToNumber, parseDateSkeleton, formatDate, numberToDatetime } from './afb-formatters.min.js';
 
@@ -3376,6 +3376,9 @@ class Field extends Scriptable {
     get displayFormat() {
         return this.withCategory(this._jsonModel.displayFormat);
     }
+    get displayFormatType() {
+        return this._jsonModel.displayFormatType;
+    }
     get placeholder() {
         return this._jsonModel.placeholder;
     }
@@ -3494,6 +3497,12 @@ class Field extends Scriptable {
         }
     }
     get displayValue() {
+        if (this.displayFormatType === 'expression') {
+            const format = this._jsonModel.displayFormat;
+            if (typeof format === 'string' && format.length !== 0) {
+                return this.executeExpression(format);
+            }
+        }
         const df = this.displayFormat;
         if (df && this.isNotEmpty(this.value) && this.valid !== false) {
             try {
@@ -3506,9 +3515,6 @@ class Field extends Scriptable {
         else {
             return this.value;
         }
-    }
-    set displayValue(dv) {
-        this._setProperty('displayValue', dv);
     }
     getDataNodeValue(typedValue) {
         return this.isEmpty() ? this.emptyValue : typedValue;
@@ -3570,9 +3576,6 @@ class Field extends Scriptable {
                 this.triggerValidationEvent(updates);
             }
             const changeAction = new Change({ changes: changes.concat(Object.values(updates)) });
-            if (this.displayFormat && changes.currentValue !== changes.prevValue) {
-                this.dispatch(new Format(v));
-            }
             this.dispatch(changeAction);
         }
     }

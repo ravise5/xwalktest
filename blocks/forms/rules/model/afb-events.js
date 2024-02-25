@@ -141,11 +141,6 @@ class Reset extends ActionImpl {
         super(payload, 'reset', { dispatch });
     }
 }
-class Format extends ActionImpl {
-    constructor(payload, dispatch = false) {
-        super(payload, 'format', { dispatch });
-    }
-}
 class FieldChanged extends ActionImpl {
     constructor(changes, field) {
         super({
@@ -183,4 +178,4 @@ class RemoveInstance extends ActionImpl {
     }
 }
 
-export { AddInstance, AddItem, Blur, Change, Click, CustomEvent, ExecuteRule, FieldChanged, Focus, FormLoad, Format, Initialize, Invalid, RemoveInstance, RemoveItem, Reset, Submit, SubmitFailure, SubmitSuccess, Valid, ValidationComplete, propertyChange };
+export { AddInstance, AddItem, Blur, Change, Click, CustomEvent, ExecuteRule, FieldChanged, Focus, FormLoad, Initialize, Invalid, RemoveInstance, RemoveItem, Reset, Submit, SubmitFailure, SubmitSuccess, Valid, ValidationComplete, propertyChange };
