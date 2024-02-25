@@ -21,7 +21,7 @@
  */
  function formatCreditCardNumber(field)
  {
-    var cardNumber = field.$value ? field.$value : field.$value + '';
+    var cardNumber = field.$value ? field.$value + '' : field.$value;
     var formattedNumber = cardNumber;
     if(cardNumber) {
       var maskedNumber = cardNumber.replace(/\d(?=\d{4})/g, '*');  // Replace digits with masked characters except for the last four
