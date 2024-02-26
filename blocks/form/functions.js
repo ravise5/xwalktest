@@ -14,6 +14,7 @@
 }
 
 /**
+ * Formats Credit Card Number
  * @name formatCreditCardNumber Formats Credit Card Number
  * @param {object} field field whoes value to be formatted
  * @return {string}
@@ -30,5 +31,17 @@
     return formattedNumber;
  }
 
+ /**
+  * Formats the SSN
+ * @name formatSSN Formats SSN
+ * @param {object} field field whoes value to be formatted
+ * @return {string}
+ * @formatter
+ */
+  function formatSSN(field)
+  {
+      return field.$value;
+  }
+
 // eslint-disable-next-line import/prefer-default-export
-export { getFullName, formatCreditCardNumber };
+export { getFullName, formatCreditCardNumber, formatSSN };
