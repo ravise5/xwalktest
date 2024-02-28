@@ -238,7 +238,7 @@ function inputDecorator(field, element) {
     input.autocomplete = field.autoComplete ?? 'off';
     input.disabled = field.enabled === false;
     const fieldType = getHTMLRenderType(field);
-    if (['number', 'date'].includes(fieldType) && field.displayFormat !== undefined) {
+    if (['number', 'date'].includes(fieldType) && (field.displayFormat !== undefined || field.displayValueExpression !== undefined)) {
       field.type = fieldType;
       input.setAttribute('edit-value', field.value ?? '');
       input.setAttribute('display-value', field.displayValue ?? '');
