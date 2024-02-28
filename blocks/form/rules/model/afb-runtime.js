@@ -3376,8 +3376,8 @@ class Field extends Scriptable {
     get displayFormat() {
         return this.withCategory(this._jsonModel.displayFormat);
     }
-    get displayFormatType() {
-        return this._jsonModel.displayFormatType;
+    get displayValueExpression() {
+        return this._jsonModel.displayValueExpression;
     }
     get placeholder() {
         return this._jsonModel.placeholder;
@@ -3497,10 +3497,10 @@ class Field extends Scriptable {
         }
     }
     get displayValue() {
-        if (this.displayFormatType === 'expression') {
-            const format = this._jsonModel.displayFormat;
-            if (typeof format === 'string' && format.length !== 0) {
-                return this.executeExpression(format);
+        if (this.displayValueExpression) {
+            const displayValueExpression = this.displayValueExpression;
+            if (typeof displayValueExpression === 'string' && displayValueExpression.length !== 0) {
+                return this.executeExpression(displayValueExpression);
             }
         }
         const df = this.displayFormat;
