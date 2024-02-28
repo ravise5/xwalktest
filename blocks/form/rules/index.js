@@ -24,7 +24,7 @@ async function fieldChanged(payload, form, generateFormRendition) {
   const { changes, field: fieldModel } = payload;
   changes.forEach((change) => {
     const {
-      id, fieldType, readOnly, type, displayValue, displayFormat,
+      id, fieldType, readOnly, type, displayValue, displayFormat, displayValueExpression
     } = fieldModel;
     const { propertyName, currentValue } = change;
     const field = form.querySelector(`#${id}`);
@@ -46,7 +46,7 @@ async function fieldChanged(payload, form, generateFormRendition) {
         }
         break;
       case 'value':
-        if (['number', 'date'].includes(field.type) && displayFormat) {
+        if (['number', 'date'].includes(field.type) && (displayFormat || displayValueExpression)) {
           field.type = 'text';
           field.value = displayValue;
           field.setAttribute('edit-value', currentValue);
