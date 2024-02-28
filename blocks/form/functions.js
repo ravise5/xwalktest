@@ -15,3 +15,54 @@ function getFullName(firstname, lastname) {
 
 // eslint-disable-next-line import/prefer-default-export
 export { getFullName };
+/**
+ * Get Full Name
+ * @name getFullName Concats first name and last name
+ * @param {string} firstname in Stringformat
+ * @param {string} lastname in Stringformat
+ * @return {string}
+ */
+ function getFullName(firstname, lastname) {
+  // eslint-disable-next-line no-param-reassign
+  firstname = (firstname == null) ? '' : firstname;
+  // eslint-disable-next-line no-param-reassign
+  lastname = (lastname == null) ? '' : lastname;
+  return firstname.concat(' ').concat(lastname);
+}
+
+/**
+ * Formats Credit Card Number
+ * @name formatCreditCardNumber Formats Credit Card Number
+ * @param {object} field field whoes value to be formatted
+ * @return {string}
+ * @formatter
+ */
+ function formatCreditCardNumber(field)
+ {
+    var cardNumber = field.$value ? field.$value + '' : field.$value;
+    var formattedNumber = cardNumber;
+    if(cardNumber) {
+      var maskedNumber = cardNumber.replace(/\d(?=\d{4})/g, '*');  // Replace digits with masked characters except for the last four
+      var formattedNumber = maskedNumber.replace(/(.{4})/g, '$1 '); // Add spaces after every 4 letters
+    }
+    return formattedNumber;
+ }
+
+ /**
+  * Formats the SSN
+ * @name formatSSN Formats SSN
+ * @param {object} field field whoes value to be formatted
+ * @return {string}
+ * @formatter
+ */
+  function formatSSN(field)
+  {
+      var ssn = field.$value ? field.$value + '' : field.$value;
+      if(ssn) {
+        return ssn.replace(/(\d{3})(\d{2})(\d{4})/, '$1-$2-$3');
+      }
+      return ssn;
+  }
+
+// eslint-disable-next-line import/prefer-default-export
+export { getFullName, formatCreditCardNumber, formatSSN };
