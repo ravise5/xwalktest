@@ -1,14 +1,18 @@
+import { DEFAULT_THANK_YOU_MESSAGE } from './constant.js';
+
 export function submitSuccess(e, form) {
   const { payload } = e;
-  if (payload?.body?.redirectUrl) {
-    window.location.assign(encodeURI(payload.body.redirectUrl));
+  const redirectUrl = form.dataset.redirectUrl || payload?.body?.redirectUrl;
+  const thankYouMsg = form.dataset.thankYouMsg || payload?.body?.thankYouMessage;
+  if (redirectUrl) {
+    window.location.assign(encodeURI(redirectUrl));
   } else {
     let thankYouMessage = form.querySelector('.form-message.success-message');
     if (!thankYouMessage) {
       thankYouMessage = document.createElement('div');
       thankYouMessage.className = 'form-message success-message';
     }
-    thankYouMessage.innerHTML = payload?.body?.thankYouMessage || 'Thanks for your submission';
+    thankYouMessage.innerHTML = thankYouMsg || DEFAULT_THANK_YOU_MESSAGE;
     form.prepend(thankYouMessage);
     if (thankYouMessage.scrollIntoView) {
       thankYouMessage.scrollIntoView({ behavior: 'smooth' });
@@ -36,16 +40,31 @@ function generateUnique() {
   return new Date().valueOf() + Math.random();
 }
 
+function getFieldValue(fe, payload) {
+  if (fe.type === 'radio') {
+    return fe.form.elements[fe.name].value;
+  } if (fe.type === 'checkbox') {
+    if (fe.checked) {
+      if (payload[fe.name]) {
+        return `${payload[fe.name]},${fe.value}`;
+      }
+      return fe.value;
+    }
+  } else if (fe.type !== 'file') {
+    return fe.value;
+  }
+  return null;
+}
+
 function constructPayload(form) {
   const payload = { __id__: generateUnique() };
   [...form.elements].forEach((fe) => {
-    if (fe.name) {
-      if (fe.type === 'radio') {
-        if (fe.checked) payload[fe.name] = fe.value;
-      } else if (fe.type === 'checkbox') {
-        if (fe.checked) payload[fe.name] = payload[fe.name] ? `${payload[fe.name]},${fe.value}` : fe.value;
-      } else if (fe.type !== 'file') {
-        payload[fe.name] = fe.value;
+    if (fe.name && !fe.matches('button') && !fe.disabled && fe.tagName !== 'FIELDSET') {
+      const value = getFieldValue(fe, payload);
+      if (fe.closest('.repeat-wrapper')) {
+        payload[fe.name] = payload[fe.name] ? `${payload[fe.name]},${fe.value}` : value;
+      } else {
+        payload[fe.name] = value;
       }
     }
   });
@@ -57,18 +76,23 @@ async function prepareRequest(form) {
   const headers = {
     'Content-Type': 'application/json',
   };
-  const body = JSON.stringify({ data: payload });
+  const body = { data: payload };
   const url = form.dataset.submit || form.dataset.action;
   return { headers, body, url };
 }
 
-async function submitDocBasedForm(form) {
+async function submitDocBasedForm(form, captcha) {
   try {
-    const { headers, body, url } = await prepareRequest(form);
+    const { headers, body, url } = await prepareRequest(form, captcha);
+    let token = null;
+    if (captcha) {
+      token = await captcha.getToken();
+      body.data['g-recaptcha-response'] = token;
+    }
     const response = await fetch(url, {
       method: 'POST',
       headers,
-      body,
+      body: JSON.stringify(body),
     });
     if (response.ok) {
       submitSuccess(response, form);
@@ -81,19 +105,19 @@ async function submitDocBasedForm(form) {
   }
 }
 
-export async function handleSubmit(e, form) {
+export async function handleSubmit(e, form, captcha) {
   e.preventDefault();
   const valid = form.checkValidity();
   if (valid) {
-    e.submitter.setAttribute('disabled', '');
+    e.submitter?.setAttribute('disabled', '');
     if (form.getAttribute('data-submitting') !== 'true') {
       form.setAttribute('data-submitting', 'true');
 
       // hide error message in case it was shown before
       form.querySelectorAll('.form-message.show').forEach((el) => el.classList.remove('show'));
 
-      if (form.dataset.src === 'sheet') {
-        await submitDocBasedForm(form);
+      if (form.dataset.source === 'sheet') {
+        await submitDocBasedForm(form, captcha);
       }
     }
   } else {
