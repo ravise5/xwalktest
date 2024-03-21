@@ -6,7 +6,11 @@
  * @return {string}
  */
 function getFullName(firstname, lastname) {
-  return `${firstname} ${lastname}`?.trim();
+  // eslint-disable-next-line no-param-reassign
+  firstname = (firstname == null) ? '' : firstname;
+  // eslint-disable-next-line no-param-reassign
+  lastname = (lastname == null) ? '' : lastname;
+  return firstname.concat(' ').concat(lastname);
 }
 
 /**
