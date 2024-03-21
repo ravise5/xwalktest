@@ -6,7 +6,7 @@
  * @return {string}
  */
 function getFullName(firstname, lastname) {
-  return `${firstname} ${lastname}`?.trim();
+  return `${firstname} ${lastname}`.trim();
 }
 
 /**
