@@ -1,5 +1,5 @@
 mountpoints:
   /:
-    url: https://283250-xwalktest.adobeioruntime.net/api/v1/web/convert/main/
+    url: https://author-p10652-e203356-cmstg.adobeaemcloud.com/
     type: "markup"
-    suffix: ""
+    suffix: ".md.html"
