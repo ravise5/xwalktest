@@ -6,8 +6,17 @@
  * @return {string}
  */
 function getFullName(firstname, lastname) {
-  return `${firstname} ${lastname}`.trim();
+  // eslint-disable-next-line no-param-reassign
+  firstname = (firstname == null) ? '' : firstname;
+  // eslint-disable-next-line no-param-reassign
+  lastname = (lastname == null) ? '' : lastname;
+  return firstname.concat(' ').concat(lastname);
 }
+/**
+ * On Wizard Init.
+ * @name onWizardInit Runs on initialization of wizard
+ */
+function onWizardInit() {}
 
 /**
  * Calculate the number of days between two dates.
@@ -29,52 +38,10 @@ function days(endDate, startDate) {
 }
 
 /**
- * Formats Credit Card Number
- * @name formatCreditCardNumber Formats Credit Card Number
- * @param {object} field field whose value to be formatted
- * @return {string}
+ * Called on form init.
+ * @name onFormInit Is called on form init
  */
-function formatCreditCardNumber(field) {
-  const cardNumber = field.$value ? `${field.$value}` : field.$value;
-  var formattedNumber = cardNumber;
-  if (cardNumber) {
-    const maskedNumber = cardNumber.replace(/\d(?=\d{4})/g, '*'); // Replace digits with masked characters except for the last four
-    var formattedNumber = maskedNumber.replace(/(.{4})/g, '$1 '); // Add spaces after every 4 letters
-  }
-  return formattedNumber;
-}
-
-/**
- * Formats Date input
- * @name formatDateInput Formats Date input
- * @param {object} field field whose value to be formatted
- * @return {string}
- */
-function formatDateInput(field) {
-  const date = field.$value;
-  return date ? `${date} today` : date;
-}
-
-/**
- * Formats email input
- * @name formatEmailInput Formats email input
- * @param {object} field field whose value to be formatted
- * @return {string}
- */
-function formatEmailInput(field) {
-  const email = field.$value;
-  let transformedEmail;
-  if (email) {
-    const parts = email.split('@');
-    if (parts[0].length > 1) {
-      transformedEmail = `${parts[0][0] + '*'.repeat(parts[0].length - 1)}@${parts[1]}`;
-    } else {
-      transformedEmail = email;
-    }
-  }
-
-  return transformedEmail;
-}
+function onFormInit() {}
 
 /**
  * Formats telephone input
@@ -92,8 +59,7 @@ function formatTelephoneInput(field) {
   return phoneNumber;
 }
 
-// eslint-disable-next-line import/prefer-default-export,max-len
+// eslint-disable-next-line import/prefer-default-export
 export {
-  getFullName, days, formatCreditCardNumber, formatDateInput, formatEmailInput,
-  formatTelephoneInput,
+  getFullName, onWizardInit, days, onFormInit, formatTelephoneInput,
 };
