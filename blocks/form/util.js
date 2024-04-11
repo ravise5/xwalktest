@@ -174,12 +174,12 @@ function removeInvalidMsg(fieldElement) {
 }
 
 export const validityKeyMsgMap = {
-  patternMismatch: { message: 'pattern' },
-  rangeOverflow: { message: 'maximum', attribute: '' },
-  rangeUnderflow: { message: 'minimum', attribute: '' },
-  tooLong: { message: 'maxLength', attribute: '' },
-  tooShort: { message: 'minLength', attribute: '' },
-  valueMissing: { message: 'required' },
+  patternMismatch: { key: 'pattern' },
+  rangeOverflow: { key: 'maximum', attribute: '' },
+  rangeUnderflow: { key: 'minimum', attribute: '' },
+  tooLong: { key: 'maxLength', attribute: '' },
+  tooShort: { key: 'minLength', attribute: '' },
+  valueMissing: { key: 'required' },
 };
 
 export function getCheckboxGroupValue(name, htmlForm) {
