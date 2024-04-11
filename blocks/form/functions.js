@@ -59,7 +59,28 @@ function formatTelephoneInput(field) {
   return phoneNumber;
 }
 
+/**
+ * Formats email input
+ * @name formatEmailInput Formats email input
+ * @param {object} field field whose value to be formatted
+ * @return {string}
+ */
+function formatEmailInput(field) {
+  const email = field.$value;
+  let transformedEmail;
+  if (email) {
+    const parts = email.split('@');
+    if (parts[0].length > 1) {
+      transformedEmail = `${parts[0][0] + '*'.repeat(parts[0].length - 1)}@${parts[1]}`;
+    } else {
+      transformedEmail = email;
+    }
+  }
+
+  return transformedEmail;
+}
+
 // eslint-disable-next-line import/prefer-default-export
 export {
-  getFullName, onWizardInit, days, onFormInit, formatTelephoneInput,
+  getFullName, onWizardInit, days, onFormInit, formatTelephoneInput, formatEmailInput,
 };
