@@ -8,6 +8,17 @@ export const defaultErrorMessages = {
   maxFileSize: 'File too large. Reduce size and try again.',
   maxItems: 'Specify a number of items equal to or less than $0.',
   minItems: 'Specify a number of items equal to or greater than $0.',
+  pattern: 'Please match the format requested.',
+  minLength: 'Please lengthen this text to $0 characters or more.',
+  maxLength: 'Please shorten this text to $0 characters or less.',
+  maximum: 'Value must be less than or equal to $0.',
+  minimum: 'Value must be greater than or equal to $0.',
+  type: 'Please enter a valid value.',
+  required: 'Please fill in this field.',
+  step: 'Please enter a valid value.',
+  format: 'Specify the value in allowed format : $0.',
+  uniqueItems: 'All the items must be unique.',
+  validationExpression: 'Please enter a valid value.',
 };
 
 // eslint-disable-next-line no-useless-escape
