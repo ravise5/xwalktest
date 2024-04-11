@@ -387,11 +387,7 @@ function enableValidation(form) {
   });
 
   form.addEventListener('change', (event) => {
-<<<<<<< Updated upstream
-      checkValidation(event.target);
-=======
     checkValidation(event.target);
->>>>>>> Stashed changes
   });
 }
 
