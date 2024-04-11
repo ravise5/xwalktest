@@ -52,7 +52,6 @@ function onFormInit() {}
 function formatTelephoneInput(field) {
   const phoneNumber = field.$value;
   if (phoneNumber) {
-    phoneNumber += '';
     const maskedDigits = phoneNumber.substring(0, 7).replace(/\d/g, '*');
     const lastThreeDigits = phoneNumber.substring(7);
     return maskedDigits + lastThreeDigits;
