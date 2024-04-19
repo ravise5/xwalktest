@@ -35,7 +35,7 @@ function days(endDate, startDate) {
  * @param {scope} globals
  * @return {string}
  */
-function testSetProperty(input1, normalField, globals)
+function testSetProperty(normalField, globals)
 {
     globals.functions.setProperty(normalField, {label : {value : 'Changed Label'}});
     return "defaultValue";
@@ -48,7 +48,7 @@ function testSetProperty(input1, normalField, globals)
  */
 function testSubmitFormPreprocessor(globals)
 {
-    var formData = globals.functions.exportData();
+    let formData = globals.functions.exportData();
     formData.textinput1 = 'customData';
     globals.functions.submitForm(formData, false, 'application/json');
 }
