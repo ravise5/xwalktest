@@ -28,5 +28,30 @@ function days(endDate, startDate) {
   return Math.floor(diffInMs / (1000 * 60 * 60 * 24));
 }
 
+/**
+ * testSetProperty
+ * @name testSetProperty
+ * @param {object} normalField
+ * @param {scope} globals
+ * @return {string}
+ */
+function testSetProperty(input1, normalField, globals)
+{
+    globals.functions.setProperty(normalField, {label : {value : 'Changed Label'}});
+    return "defaultValue";
+}
+
+/**
+ * testSubmitFormPreprocessor
+ * @name testSubmitFormPreprocessor
+ * @param {scope} globals
+ */
+function testSubmitFormPreprocessor(globals)
+{
+    var formData = globals.functions.exportData();
+    formData.textinput1 = 'customData';
+    globals.functions.submitForm(formData, false, 'application/json');
+}
+
 // eslint-disable-next-line import/prefer-default-export
-export { getFullName, days };
+export { getFullName, days, testSetProperty, testSubmitFormPreprocessor};
