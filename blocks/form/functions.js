@@ -53,5 +53,21 @@ function testSubmitFormPreprocessor(globals)
     globals.functions.submitForm(formData, false, 'application/json');
 }
 
+/**
+ * Formats telephone input
+ * @name formatTelephoneInput Formats telephone input
+ * @param {object} field field whose value to be formatted
+ * @return {string}
+ */
+function formatTelephoneInput(field) {
+  const phoneNumber = field.$value;
+  if (phoneNumber) {
+    const maskedDigits = phoneNumber.substring(0, 7).replace(/\d/g, '*');
+    const lastThreeDigits = phoneNumber.substring(7);
+    return maskedDigits + lastThreeDigits;
+  }
+  return phoneNumber;
+}
+
 // eslint-disable-next-line import/prefer-default-export
-export { getFullName, days, testSetProperty, testSubmitFormPreprocessor};
+export { getFullName, days, testSetProperty, testSubmitFormPreprocessor, formatTelephoneInput};
