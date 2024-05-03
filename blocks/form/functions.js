@@ -24,6 +24,8 @@ function days(endDate, startDate) {
     return 0;
   }
 
+  
+
   const diffInMs = Math.abs(end.getTime() - start.getTime());
   return Math.floor(diffInMs / (1000 * 60 * 60 * 24));
 }
@@ -67,6 +69,15 @@ function formatTelephoneInput(field) {
     return maskedDigits + lastThreeDigits;
   }
   return phoneNumber;
+}
+
+/**
+ * Sets the error message of a component
+ * @name setErrorMessage Formats telephone input
+ * @param {scope} globals
+ */
+function setErrorMessage(globals) {
+  globals.functions.markAsInvalid('$form.textinput1714726423933', 'This field has errror, please check!');
 }
 
 // eslint-disable-next-line import/prefer-default-export
