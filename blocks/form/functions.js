@@ -81,4 +81,4 @@ function setErrorMessage(globals) {
 }
 
 // eslint-disable-next-line import/prefer-default-export
-export { getFullName, days, testSetProperty, testSubmitFormPreprocessor, formatTelephoneInput};
+export { getFullName, days, testSetProperty, testSubmitFormPreprocessor, formatTelephoneInput, setErrorMessage};
