@@ -56,19 +56,18 @@ function testSubmitFormPreprocessor(globals)
 }
 
 /**
- * Formats telephone input
- * @name formatTelephoneInput Formats telephone input
- * @param {object} field field whose value to be formatted
- * @return {string}
- */
-function formatTelephoneInput(field) {
+* Masks telephone input
+* @name maskTelephoneInput Masks telephone input
+* @param {object} field field whose value is to be masked
+* @return {string}
+*/
+function maskTelephoneInput(field) {
   const phoneNumber = field.$value;
   if (phoneNumber) {
-    const maskedDigits = phoneNumber.substring(0, 7).replace(/\d/g, '*');
-    const lastThreeDigits = phoneNumber.substring(7);
-    return maskedDigits + lastThreeDigits;
+    const maskedPhoneNumber = phoneNumber.replace(/.(?=.{4,}$)/g, '*');
+    return `+91 ${maskedPhoneNumber}`;
   }
-  return phoneNumber;
+  return phoneNumber || '';
 }
 
 /**
@@ -81,4 +80,4 @@ function setErrorMessage(globals) {
 }
 
 // eslint-disable-next-line import/prefer-default-export
-export { getFullName, days, testSetProperty, testSubmitFormPreprocessor, formatTelephoneInput, setErrorMessage};
+export { getFullName, days, testSetProperty, testSubmitFormPreprocessor, maskTelephoneInput, setErrorMessage};
